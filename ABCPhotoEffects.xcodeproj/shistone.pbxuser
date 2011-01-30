@@ -1,0 +1,292 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* OpenCVTestAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1098, 319}}";
+			sepNavSelRange = "{152, 0}";
+			sepNavVisRange = "{0, 336}";
+		};
+	};
+	1D3623250D0F684500981E51 /* OpenCVTestAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1098, 319}}";
+			sepNavSelRange = "{124, 0}";
+			sepNavVisRange = "{0, 397}";
+		};
+	};
+	28D7ACF60DDB3853001CB0EB /* OpenCVTestViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1098, 780}}";
+			sepNavSelRange = "{328, 0}";
+			sepNavVisRange = "{0, 1110}";
+		};
+	};
+	28D7ACF70DDB3853001CB0EB /* OpenCVTestViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1202, 4979}}";
+			sepNavSelRange = "{890, 0}";
+			sepNavVisRange = "{0, 1914}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 95700E8C116B64B1003C56FC /* OpenCVTest */;
+		activeSDKPreference = iphoneos3.1.2;
+		activeTarget = 540723D90E3DD25B00B598A2 /* OpenCVTest */;
+		codeSenseManager = 95700E96116B64D1003C56FC /* Code sense */;
+		executables = (
+			95700E8C116B64B1003C56FC /* OpenCVTest */,
+		);
+		perUserDictionary = {
+			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA23EDF0692099D00951B8B" = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXBreakpointsDataSource_BreakpointID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					350,
+					20,
+					250,
+					250,
+					180,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXBreakpointsDataSource_ActionID,
+					PBXBreakpointsDataSource_TypeID,
+					PBXBreakpointsDataSource_BreakpointID,
+					PBXBreakpointsDataSource_UseID,
+					PBXBreakpointsDataSource_LocationID,
+					PBXBreakpointsDataSource_ConditionID,
+					PBXBreakpointsDataSource_IgnoreCountID,
+					PBXBreakpointsDataSource_ContinueID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					808,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					920,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					860,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					880,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 296916353;
+			PBXWorkspaceStateSaveDate = 296916353;
+		};
+		perUserProjectItems = {
+			951DB17911B219C300E6B0CC /* PBXTextBookmark */ = 951DB17911B219C300E6B0CC /* PBXTextBookmark */;
+			953D21581184001800659379 /* PBXBookmark */ = 953D21581184001800659379 /* PBXBookmark */;
+			953D22FA118414AA00659379 /* PBXTextBookmark */ = 953D22FA118414AA00659379 /* PBXTextBookmark */;
+			953D22FB118414AA00659379 /* PBXTextBookmark */ = 953D22FB118414AA00659379 /* PBXTextBookmark */;
+			953D24361184365700659379 /* PBXTextBookmark */ = 953D24361184365700659379 /* PBXTextBookmark */;
+			953D24371184365700659379 /* PBXTextBookmark */ = 953D24371184365700659379 /* PBXTextBookmark */;
+			953D24381184365700659379 /* PBXTextBookmark */ = 953D24381184365700659379 /* PBXTextBookmark */;
+			957C507F11B3500E00B454CF /* PBXTextBookmark */ = 957C507F11B3500E00B454CF /* PBXTextBookmark */;
+		};
+		sourceControlManager = 95700E95116B64D1003C56FC /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1098, 296}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 211}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* OpenCVTest_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1098, 296}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 181}";
+		};
+	};
+	540723D90E3DD25B00B598A2 /* OpenCVTest */ = {
+		activeExec = 0;
+		executables = (
+			95700E8C116B64B1003C56FC /* OpenCVTest */,
+		);
+	};
+	951DB17911B219C300E6B0CC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* OpenCVTestViewController.m */;
+		name = "OpenCVTestViewController.m: 26";
+		rLen = 0;
+		rLoc = 890;
+		rType = 0;
+		vrLen = 1914;
+		vrLoc = 0;
+	};
+	953D21581184001800659379 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 549913C60E3E3D2100BD1311 /* Default.png */;
+	};
+	953D22FA118414AA00659379 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 211;
+		vrLoc = 0;
+	};
+	953D22FB118414AA00659379 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* OpenCVTest_Prefix.pch */;
+		name = "OpenCVTest_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 181;
+		vrLoc = 0;
+	};
+	953D24361184365700659379 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* OpenCVTestAppDelegate.m */;
+		name = "OpenCVTestAppDelegate.m: 5";
+		rLen = 0;
+		rLoc = 124;
+		rType = 0;
+		vrLen = 397;
+		vrLoc = 0;
+	};
+	953D24371184365700659379 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* OpenCVTestAppDelegate.h */;
+		name = "OpenCVTestAppDelegate.h: 6";
+		rLen = 0;
+		rLoc = 152;
+		rType = 0;
+		vrLen = 336;
+		vrLoc = 0;
+	};
+	953D24381184365700659379 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF60DDB3853001CB0EB /* OpenCVTestViewController.h */;
+		name = "OpenCVTestViewController.h: 13";
+		rLen = 0;
+		rLoc = 328;
+		rType = 0;
+		vrLen = 1110;
+		vrLoc = 0;
+	};
+	95700E8C116B64B1003C56FC /* OpenCVTest */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = OpenCVTest;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	95700E95116B64D1003C56FC /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	95700E96116B64D1003C56FC /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	957C507F11B3500E00B454CF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* OpenCVTestViewController.m */;
+		name = "OpenCVTestViewController.m: 26";
+		rLen = 0;
+		rLoc = 890;
+		rType = 0;
+		vrLen = 1914;
+		vrLoc = 0;
+	};
+}
