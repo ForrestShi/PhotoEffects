@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>detail</key>
+		<string>build old photo color effect</string>
+		<key>name</key>
+		<string>sepia</string>
+		<key>preview</key>
+		<string>sepia.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>oil painting effect</string>
+		<key>name</key>
+		<string>oilpaint</string>
+		<key>preview</key>
+		<string>oilpaint.png</string>
+	</dict>
+</array>
+</plist>

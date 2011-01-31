@@ -6,43 +6,57 @@
 
 #import "LabeledActivityIndicatorView.h"
 
+typedef	enum{
+	Sepia,
+	OilPaint
+}EffectType;
+
+@protocol FlipbackDelegate
+
+- (void) flipback:(EffectType)type;
+
+@end
+
+
 @interface PhotoProcessViewController : UIViewController <UIActionSheetDelegate, 
 UIImagePickerControllerDelegate,
 UIPopoverControllerDelegate,
 UINavigationControllerDelegate,
-MFMailComposeViewControllerDelegate> {
-	UIImageView *imageView;
-	UISlider* slider1;
-	UISlider* blurAdjustSlider;
+MFMailComposeViewControllerDelegate,
+FlipbackDelegate> {
+	UIImageView *_imageView;
+	UISlider* _slider1;
+	UISlider* slider2;
+	BOOL	needSlider1;
+	BOOL	needSlider2;
 	
-	LabeledActivityIndicatorView* activity;
+	LabeledActivityIndicatorView* _activity;
 	SystemSoundID alertSoundID;
-
+	
 	UIImagePickerController * _picker;
 	UIPopoverController* _popover;
-	UIToolbar *toolbar;
-	UIBarButtonItem *loadItem;
+	UIToolbar *_toolbar;
 	
-	CGImageRef oriCGImage;
+	CGImageRef _beforeImage;
+	EffectType currentType;
 }
 
 - (IBAction)loadImage:(id)sender;
 - (IBAction)shareImage:(id)sender;
-
+- (IBAction)pickupEffect:(id)sender;
 
 @property (nonatomic, retain) LabeledActivityIndicatorView* activity;
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UISlider* slider1;
-@property (nonatomic,retain) UISlider* blurAdjustSlider;
+@property (nonatomic, retain) UISlider* slider2;
+@property (nonatomic, assign) EffectType currentType;
 
 @property (nonatomic, retain) UIPopoverController* popover;
 @property (nonatomic, retain) UIImagePickerController *picker;
 
 @property (nonatomic, retain) UIToolbar *toolbar;
-@property (nonatomic, retain) UIBarButtonItem *loadItem;
 
-
-@property (nonatomic, assign) CGImageRef oriCGImage;
+@property (nonatomic, assign) CGImageRef beforeImage;
 
 
 @end

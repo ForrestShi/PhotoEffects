@@ -1,18 +1,19 @@
 
-//
-
-
 #import "PhotoProcessViewController.h"
 #import <opencv/cv.h>
 #import "MyUIBox.h"
 #import "MyImageKit.h"
 #import "Appirater.h"
 #import "SHK.h"
+#import "EffectsTableViewController.h"
 
 static NSString* message = @"More fun apps from us: http://DesignForApple.com, follow us with twitter.com/design4apple, email us with design4apple@gmail.com,thanks for your feedbacks in advance!";
-//static NSString* title = @"Swirl your friends' faces with fun !";
 static NSString* title = @"Sepia Pro App from DesignForApple.com";
 
+#define TOOLBAR_HEIGHT 60 
+#define SLIDER_MAX 100
+#define SLIDER_MIN 0
+#define SLIDER_DEFAULT 50
 
 #define ThrowWandException(wand) { \
 char * description; \
@@ -28,25 +29,29 @@ exit(-1); \
 
 @implementation PhotoProcessViewController
 
-@synthesize imageView;
-@synthesize slider1,blurAdjustSlider;
-@synthesize toolbar,loadItem;
+@synthesize imageView = _imageView;
+@synthesize slider1 = _slider1 ,slider2;
+@synthesize toolbar = _toolbar;
 @synthesize picker = _picker;
 @synthesize popover = _popover;
-@synthesize activity;
-@synthesize oriCGImage;
+@synthesize activity = _activity;
+@synthesize beforeImage = _beforeImage;
+@synthesize currentType;
 
 
 - (void)dealloc {
 	AudioServicesDisposeSystemSoundID(alertSoundID);
 
-	CGImageRelease(oriCGImage);
-	[imageView release];
-	[activity  release];
-	[slider1 release]; 
-	[blurAdjustSlider release];
-	[toolbar release];
-	[loadItem release];
+	if (_beforeImage) {
+		CGImageRelease(_beforeImage);
+		_beforeImage = nil;
+	}
+
+	[_imageView release];
+	[_activity  release];
+	[_slider1 release];
+	[slider2 release];
+	[_toolbar release];
 	[_picker release];
 	[_popover release];
 	[super dealloc];
@@ -69,49 +74,68 @@ CGImageRef createStandardImage(CGImageRef image) {
 	return dstImage;
 }
 
+- (void) setCurrentType:(EffectType)newType
+{
+	currentType = newType;
+	needSlider1 = YES;
+	needSlider2 = NO;
+	
+//	if (currentType == OilPaint) {
+//		needSlider1 = YES;
+//		needSlider2 = YES;
+//	}else if (currentType == Sepia) {
+//		needSlider1 = YES;
+//		needSlider2 = NO;
+//	}
+}
 
+- (NSString*) effectName:(EffectType)effectType
+{
+	NSString* name = nil;
+	switch (effectType) {
+		case -1:
+			name = @"No Effect";
+			break;
+		case Sepia:
+			name = @"Sepia";
+			break;
+		case OilPaint:
+			name = @"Oil Painting";
+			break;
+		default:
+			name=@"unknown";
+			break;
+	}
+	return name;
+}
 
-
--(void) filterOilPainting:(MagickWand*)magick_wand{
-
+-(MagickBooleanType) filterOilPainting:(MagickWand*)magick_wand{
 	MagickBooleanType status;
 	
-	float ratio1 = slider1.value;
-	float ratio2 = blurAdjustSlider.value;
+	float ratio1 = self.slider1.value/20;
+	//float ratio2 = slider2.value;
 	
 	status = MagickOilPaintImage(magick_wand,ratio1);  //2
-	status =MagickRadialBlurImage(magick_wand,
-								  ratio2);  // 1
-	if (status == MagickFalse) {
-		ThrowWandException(magick_wand);
-	}
+	status = MagickRadialBlurImage(magick_wand,1);  // 1
+	return status;
 }
 
--(void) filterSepiaTone:(MagickWand*)magick_wand{
-	MagickBooleanType status;
-	float ratio1 = slider1.value*1.5 + 80;
-	status =MagickSepiaToneImage(magick_wand,
-								 ratio1 );
-	if (status == MagickFalse) {
-		ThrowWandException(magick_wand);
-	}
+-(MagickBooleanType) filterSepiaTone:(MagickWand*)magick_wand{
+	float ratio1 = self.slider1.value*1.5 + 80;
+	return MagickSepiaToneImage(magick_wand,
+								ratio1 );
 }
 
--(void) filterSpread:(MagickWand*)magick_wand{
-	MagickBooleanType status;
-	float ratio = slider1.value*0.3; // (0, 10.0)
- 
-	status = MagickSpreadImage(magick_wand,ratio /*const double radius*/);
-	if (status == MagickFalse) {
-		ThrowWandException(magick_wand);
-	}
+-(MagickBooleanType) filterSpread:(MagickWand*)magick_wand{
+	float ratio = self.slider1.value*0.3; // (0, 10.0)
+	return MagickSpreadImage(magick_wand,ratio /*const double radius*/);
 }
 
 
 -(void) filterWave:(MagickWand*)magick_wand{
 	MagickBooleanType status;
-	float ratio1 = slider1.value*0.1; // (0, 10.0)
-	float ratio2 = blurAdjustSlider.value+80;
+	float ratio1 = self.slider1.value*0.1; // (0, 10.0)
+	float ratio2 = self.slider2.value+80;
 
 	//bool MagickWaveImage( MagickWand mgck_wnd, float amplitude, float wave_length )
 	status = MagickWaveImage(magick_wand,ratio1,ratio2 /*const double radius*/);
@@ -122,7 +146,7 @@ CGImageRef createStandardImage(CGImageRef image) {
 
 -(void) filterRadialBlur:(MagickWand*)magick_wand{
 	MagickBooleanType status;
-	float ratio = slider1.value*0.2; // (0, 20.0)
+	float ratio = self.slider1.value*0.2; // (0, 20.0)
 	
 	status = MagickRadialBlurImage(magick_wand,ratio /*const double radius*/);
 	
@@ -142,7 +166,7 @@ CGImageRef createStandardImage(CGImageRef image) {
 
 -(void) filterSolarize:(MagickWand*)magick_wand{
 	MagickBooleanType status;
-	float ratio = slider1.value*2.55; // (0, 255)
+	float ratio = self.slider1.value*2.55; // (0, 255)
 	
 	status =MagickRadialBlurImage(magick_wand,
 								  1.0 );
@@ -155,8 +179,8 @@ CGImageRef createStandardImage(CGImageRef image) {
 // long time 
 -(void) filterCharcoal:(MagickWand*)magick_wand{
 	MagickBooleanType status;
-	float ratio1 = slider1.value*0.05; // (0, 5.0)
-	float ratio2 = blurAdjustSlider.value*0.1;
+	float ratio1 = self.slider1.value*0.05; // (0, 5.0)
+	float ratio2 = self.slider2.value*0.1;
 	NSLog(@"ratio1 %f ratio2 %f ",ratio1,ratio2);
 	
 	//status =MagickRadialBlurImage(magick_wand,
@@ -201,10 +225,21 @@ CGImageRef createStandardImage(CGImageRef image) {
 	}
 	
 	// effects algorithm here
-
-
-	[self filterSepiaTone:magick_wand_local];
-	//[self filterSpread:magick_wand_local];
+    
+	switch (currentType) {
+		case -1:
+			//nothing to do
+			break;
+		case Sepia:
+			status = [self filterSepiaTone:magick_wand_local];
+			break;
+		case OilPaint:
+			status = [self filterOilPainting:magick_wand_local];
+			break;
+		default:
+			break;
+	}
+		//[self filterSpread:magick_wand_local];
 	//[self filterWave:magick_wand_local];
 	//[self filterRadialBlur:magick_wand_local];
 	//[self filterNegate: magick_wand_local];
@@ -237,7 +272,7 @@ CGImageRef createStandardImage(CGImageRef image) {
 	[srcData1 release];
 	free(trgt_image);
 	
-	[imageView	performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];
+	[self.imageView	performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];
 	
 	[self performSelectorOnMainThread:@selector(hideProgressIndicator) withObject:nil waitUntilDone:TRUE];
 	
@@ -251,13 +286,14 @@ CGImageRef createStandardImage(CGImageRef image) {
 - (void)showProgressIndicator:(NSString *)text {
 	
 	self.view.userInteractionEnabled = FALSE;
-	[activity show];
+	self.activity.labelText = text;
+	[self.activity show];
 }
 
 - (void)hideProgressIndicator {
 	//[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	self.view.userInteractionEnabled = TRUE;
-	[activity hide];
+	[self.activity hide];
 	AudioServicesPlaySystemSound(alertSoundID);
 	
 }
@@ -271,107 +307,14 @@ CGImageRef createStandardImage(CGImageRef image) {
 	[super viewDidLoad];
 
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
-
+	
 	NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Tink" ofType:@"aiff"] isDirectory:NO];
 	AudioServicesCreateSystemSoundID((CFURLRef)url, &alertSoundID);
-
-	CGRect fullRect = [UIScreen mainScreen].applicationFrame;
 	
-	
-	UIImage *defaultImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"jobs" ofType:@"png"]];
-	imageView = [[UIImageView alloc]initWithFrame:fullRect];//[[UIImageView alloc]initWithImage:defaultImage];
-	imageView.image = defaultImage;
-	oriCGImage =  createStandardImage(imageView.image.CGImage);
-
-	
-	self.activity = [[LabeledActivityIndicatorView alloc] initWithController:self andText:@"Rendering..."];
-    
-	[self.view addSubview:imageView];
-	
-	const float gapHeight = 45.0f;
-	
-	CGRect slider = CGRectMake(fullRect.size.width/10, fullRect.size.height*0.8, fullRect.size.width*0.8, 10);
-	slider1 = [MyUIBox yellowSlider:slider withMax:100 withMin:0 withValue:50 withLabel:@"brush size"];
-	slider.origin.y += gapHeight;
-	[slider1 addTarget:self action:@selector(adjustEffect:) forControlEvents:UIControlEventValueChanged];
-
-	blurAdjustSlider = [MyUIBox yellowSlider:slider withMax:100 withMin:0 withValue:50 withLabel:@"smooth"];
-	//[blurAdjustSlider addTarget:self action:@selector(adjustEffect:) forControlEvents:UIControlEventValueChanged];
-	
-	[self.view addSubview:slider1];
-	//[self.view addSubview:blurAdjustSlider];
-	
-	_picker = [[UIImagePickerController alloc] init];
-	_picker.delegate = self;
-
-	//tool bar
-	toolbar = [[UIToolbar alloc]init];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
-		loadItem = [[UIBarButtonItem alloc] initWithTitle:@"Load Photo" style:UIBarButtonItemStyleBordered 																			  target:self 
-												   action:@selector(loadImage:)];
-		UIBarButtonItem *emailItem = [[UIBarButtonItem alloc] initWithTitle:@"Write Email to Us" style:UIBarButtonItemStyleBordered 																			  target:self 
-																	 action:@selector(emailUs:)];
-		
-		UIBarButtonItem *reviewItem = [[UIBarButtonItem alloc] initWithTitle:@"Rate Me" style:UIBarButtonItemStyleBordered 																			  target:self 
-																	 action:@selector(rateMe:)];
-		
-		UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"Share to Friends" style:UIBarButtonItemStyleBordered																			  target:self 
-																	action:@selector(shareImage:)];
-		
-		
-		// Create a space item and set it and the search bar as the items for the toolbar.
-		UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-		toolbar.items = [NSArray arrayWithObjects:loadItem,spaceItem, emailItem,spaceItem,reviewItem,spaceItem, saveItem, nil];
-		toolbar.frame = CGRectMake(0, 0, fullRect.size.width, 60);
-		
-		toolbar.barStyle = UIBarStyleBlackTranslucent;
-		toolbar.alpha = 0.8f;
-
-		[self.view addSubview:toolbar];
-		
-		[spaceItem release];
-		[saveItem release];
-		[emailItem release];
-		[reviewItem release];
-		
-		_popover = [[UIPopoverController alloc] initWithContentViewController:_picker];
-		[_popover setDelegate:self];
-		
-	} else {
-		NSLog(@"iPhone ");
-		
-		loadItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
-																 target:self action:@selector(loadImage:)];
-		
-		UIBarButtonItem *emailItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose 
-																target:self action:@selector(emailUs:)];
-
-		UIBarButtonItem *reviewItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-																				   target:self action:@selector(rateMe:)];
-		
-		UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered																			  target:self 
-																	action:@selector(shareImage:)];
-		
-		
-		// Create a space item and set it and the search bar as the items for the toolbar.
-		UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-		toolbar.items = [NSArray arrayWithObjects:loadItem,spaceItem, emailItem,spaceItem, reviewItem, spaceItem,saveItem,spaceItem, nil];
-		
-		toolbar.frame = CGRectMake(0, 0, fullRect.size.width, 40);
-
-		toolbar.barStyle = UIBarStyleBlackTranslucent;
-		toolbar.alpha = 0.8f;
-		
-		[self.view addSubview:toolbar];
-		
-		[spaceItem release];
-		[saveItem release];
-		[emailItem release];
-		[reviewItem release];
-		
-		[self loadImage:nil];
-    }
+	[self.view addSubview:self.imageView];
+	[self.view addSubview:self.slider1];
+	[self.view addSubview:self.slider2];
+	[self.view addSubview:self.toolbar];
 	
 }
 
@@ -382,19 +325,163 @@ CGImageRef createStandardImage(CGImageRef image) {
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
 	if (touches.count > 0) {
-		//blurAdjustSlider.hidden = !blurAdjustSlider.hidden;
-		slider1.hidden = !slider1.hidden;
-		toolbar.hidden = !toolbar.hidden;
+		//if (needSlider1) {
+			self.slider1.hidden = !self.slider1.hidden;
+		//}
+		if (needSlider2) {
+			self.slider2.hidden = !self.slider2.hidden;
+		}
+		_toolbar.hidden = !_toolbar.hidden;
 	}
 }
 
 -(void)adjustEffect:(id)sender{
-	if(imageView.image){
-		[self showProgressIndicator:@"working"];
-		[self performSelectorInBackground:@selector(doFiltering:) withObject:oriCGImage];
+	if(self.imageView.image){
+		[self showProgressIndicator:[self effectName:currentType]];
+		[self performSelectorInBackground:@selector(doFiltering:) withObject:self.beforeImage];
 	}
 }
 
+#pragma mark 
+#pragma mark property 
+
+//- (CGImageRef) beforeImage
+//{
+//	return _beforeImage;
+//}
+
+- (LabeledActivityIndicatorView*) activity
+{
+	if (!_activity) {
+		_activity = [[LabeledActivityIndicatorView alloc] initWithController:self andText:@"Rendering..."];
+	}
+	return _activity;
+}
+- (UIToolbar*) toolbar
+{
+	if (!_toolbar) {
+		_toolbar = [[UIToolbar alloc] init ];
+		CGRect fullRect = [UIScreen mainScreen].applicationFrame;
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			
+			UIBarButtonItem *loadItem = [[UIBarButtonItem alloc] initWithTitle:@"Load Photo" style:UIBarButtonItemStyleBordered 																			  target:self 
+													   action:@selector(loadImage:)];
+			UIBarButtonItem *emailItem = [[UIBarButtonItem alloc] initWithTitle:@"Write Email to Us" style:UIBarButtonItemStyleBordered 																			  target:self 
+																		 action:@selector(pickupEffect:)];
+			
+			UIBarButtonItem *reviewItem = [[UIBarButtonItem alloc] initWithTitle:@"Rate Me" style:UIBarButtonItemStyleBordered 																			  target:self 
+																		  action:@selector(rateMe:)];
+			
+			UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"Share to Friends" style:UIBarButtonItemStyleBordered																			  target:self 
+																		action:@selector(shareImage:)];
+			
+			
+			// Create a space item and set it and the search bar as the items for the toolbar.
+			UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+			_toolbar.items = [NSArray arrayWithObjects:loadItem,spaceItem, emailItem,spaceItem,reviewItem,spaceItem, saveItem, nil];
+			_toolbar.frame = CGRectMake(0, fullRect.size.height - TOOLBAR_HEIGHT, fullRect.size.width,  TOOLBAR_HEIGHT);
+			
+			_toolbar.barStyle = UIBarStyleBlackTranslucent;
+			_toolbar.alpha = 0.8f;
+			
+			[spaceItem release];
+			[saveItem release];
+			[emailItem release];
+			[reviewItem release];
+			
+		} else {
+			UIBarButtonItem *loadItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
+																	 target:self action:@selector(loadImage:)];
+			
+			UIBarButtonItem *effectsPickr = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose 
+																						  target:self action:@selector(pickupEffect:)];
+			
+			UIBarButtonItem *reviewItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+																						target:self action:@selector(rateMe:)];
+			
+			UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered																			  target:self 
+																		action:@selector(shareImage:)];			
+			// Create a space item and set it and the search bar as the items for the toolbar.
+			UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+			_toolbar.items = [NSArray arrayWithObjects:loadItem,spaceItem, effectsPickr,spaceItem, reviewItem, spaceItem,saveItem,spaceItem, nil];
+			
+			_toolbar.frame = CGRectMake(0, fullRect.size.height - TOOLBAR_HEIGHT, fullRect.size.width,  TOOLBAR_HEIGHT);
+			
+			_toolbar.barStyle = UIBarStyleBlackTranslucent;
+			_toolbar.alpha = 0.8f;
+			[spaceItem release];
+			[saveItem release];
+			[effectsPickr release];
+			[reviewItem release];
+		}		
+	}
+	
+	return _toolbar;
+}
+
+- (UIPopoverController*) popover
+{
+	if (!_popover) {
+		_popover = [[UIPopoverController alloc] initWithContentViewController:self.picker];
+		[_popover setDelegate:self];
+	}
+	return _popover;
+}
+
+- (UIImagePickerController*) picker
+{
+	if (!_picker) {
+		_picker = [[UIImagePickerController alloc] init];
+		_picker.delegate = self;
+	}
+	return _picker;
+}
+
+- (void) setBeforeImage:(CGImageRef)newImage
+{
+	if (newImage == _beforeImage) {
+		return;
+	}
+	CGImageRelease(_beforeImage);
+	_beforeImage = CGImageCreateCopy(newImage);
+}
+
+- (UIImageView*) imageView
+{
+	if (!_imageView) {
+		CGRect fullRect = [UIScreen mainScreen].applicationFrame;
+		UIImage *defaultImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"jobs" ofType:@"png"]];
+		_imageView = [[UIImageView alloc]initWithFrame:fullRect];
+		_imageView.image = defaultImage;
+		self.beforeImage = createStandardImage(_imageView.image.CGImage); 
+	}
+	return _imageView;
+}
+
+- (UISlider*) slider1
+{
+	if (!_slider1) {
+		CGRect fullRect = [UIScreen mainScreen].applicationFrame;
+		CGRect slider = CGRectMake(fullRect.size.width/10, fullRect.size.height*0.8, fullRect.size.width*0.8, 10);
+		_slider1 = [MyUIBox yellowSlider:slider withMax:SLIDER_MAX withMin:SLIDER_MIN withValue:SLIDER_DEFAULT withLabel:@"nil"];
+		[_slider1 addTarget:self action:@selector(adjustEffect:) forControlEvents:UIControlEventValueChanged];
+	}
+	return _slider1;
+}
+//simplify , just have 1 slider1 now 
+- (UISlider*) slider2
+{
+	return nil;
+	
+//	if (!slider2) {
+//		CGRect fullRect = [UIScreen mainScreen].applicationFrame;
+//		CGRect slider = CGRectMake(fullRect.size.width/10, fullRect.size.height*0.7, fullRect.size.width*0.8, 10);
+//		slider2 = [MyUIBox yellowSlider:slider withMax:100 withMin:0 withValue:50 withLabel:@"nil"];
+//		[slider2 addTarget:self action:@selector(adjustEffect:) forControlEvents:UIControlEventValueChanged];
+//	}
+//	return slider2;
+	
+}
 
 #pragma mark -
 #pragma mark UIActionSheetDelegate
@@ -408,44 +495,50 @@ CGImageRef createStandardImage(CGImageRef image) {
 				sourceType = UIImagePickerControllerSourceTypeCamera;
 			} else if(buttonIndex == 2) {
 				NSString *path = [[NSBundle mainBundle] pathForResource:@"jobs" ofType:@"png"];
-				imageView.image = [UIImage imageWithContentsOfFile:path];
-				oriCGImage =  createStandardImage(imageView.image.CGImage);				
+				self.imageView.image = [UIImage imageWithContentsOfFile:path];
+				self.beforeImage = createStandardImage(self.imageView.image.CGImage);				
 			} 
 			if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
-				_picker.sourceType = sourceType;
-				[self presentModalViewController:_picker animated:YES];
+				self.picker.sourceType = sourceType;
+				[self presentModalViewController:self.picker animated:YES];
 			}
 }
 #pragma mark -
 #pragma mark IBAction
 
+- (void) resetData
+{
+	currentType = -1;  // no selected effects 
+	[self.slider1 setValue:SLIDER_DEFAULT];
+}
+
 - (IBAction)loadImage:(id)sender {
 	
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		NSLog(@"iPad");
-		[self showPhotoLibrary];
+		[self showPhotoLibrary:sender];
 	}else {
 		UIActionSheet *actionSheet;
 		
-		actionSheet = [[UIActionSheet alloc] initWithTitle:@"Load Photo"
+		actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose Photo"
 												  delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										 otherButtonTitles:@"From Photo Album", @"Take Photo With Camera",@"Fat Jobs", nil];
+										 otherButtonTitles:@"From Photo Album", @"Capture With Camera",@"Handsome Guy", nil];
 		actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		[actionSheet showInView: self.imageView ];
 		[actionSheet release];
 	}
-	//reset with new selected image
-	
+	[self resetData];
 	
 }
 
 - (IBAction)shareImage:(id)sender {
-	if(imageView.image) {
-		
-		if (_popover) {
-			[_popover dismissPopoverAnimated:YES];
+	if(self.imageView.image) {
+
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			[self.popover dismissPopoverAnimated:YES];
 		}
-		SHKItem *item = [SHKItem image:imageView.image title:title];
+		
+		SHKItem *item = [SHKItem image:self.imageView.image title:title];
 		item.text = message;// @"More Applications from us http://DesignForApple.com";
 		
 		// Get the ShareKit action sheet
@@ -462,14 +555,13 @@ CGImageRef createStandardImage(CGImageRef image) {
 }
 
 
--(void)emailUs:(id)sender{
-	MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-	controller.mailComposeDelegate = self;
-	[controller setSubject:title];
-	[controller setMessageBody:message isHTML:NO]; 
-	[controller setToRecipients:[NSArray arrayWithObjects:@"design4app@gmail.com",nil]];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
+-(IBAction)pickupEffect:(id)sender{
+	
+	EffectsTableViewController	*etvc = [[EffectsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+	etvc.delegate = self;
+	etvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController:etvc animated:YES];
+	[etvc release];
 }
 
 
@@ -483,28 +575,39 @@ CGImageRef createStandardImage(CGImageRef image) {
 	}
 	[self dismissModalViewControllerAnimated:YES];
 }
-
+#pragma mark 
+#pragma mark FlipbackDelegate
+- (void) flipback:(EffectType)type
+{
+	[self dismissModalViewControllerAnimated:YES];
+	//reset adjustment parameters
+	[self.slider1 setValue:SLIDER_DEFAULT];
+	//reset image
+	self.imageView.image = [UIImage imageWithCGImage: self.beforeImage];
+	self.currentType = type;
+}
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate
 
--(void) showPhotoLibrary
+-(void) showPhotoLibrary:(id)sender
 {	
-	if (loadItem != nil) {
-		[_popover presentPopoverFromBarButtonItem:loadItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+	if (sender != nil) {
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			[self.popover presentPopoverFromBarButtonItem:sender 
+								 permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+		}
 	}
 	
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
 	UIImage* selectedImage = [info	objectForKey:@"UIImagePickerControllerOriginalImage"];
-	imageView.image = [MyImageKit scaleAndRotateImage:selectedImage];
-	
-	//[self resetWand];
-	self.oriCGImage = createStandardImage(imageView.image.CGImage);
+	self.beforeImage = createStandardImage(selectedImage.CGImage);
+	self.imageView.image = [MyImageKit scaleAndRotateImage:selectedImage];
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-	NSLog(@"%s",__FUNCTION__);
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
 }
 @end

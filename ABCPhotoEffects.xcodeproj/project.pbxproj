@@ -110,6 +110,11 @@
 		189961A711DC2197008A9582 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1899619111DC2197008A9582 /* libpng.a */; };
 		189961A811DC2197008A9582 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1899619211DC2197008A9582 /* libtiff.a */; };
 		18ADF6E612A6A781005426F9 /* jobs.png in Resources */ = {isa = PBXBuildFile; fileRef = 18ADF6E512A6A781005426F9 /* jobs.png */; };
+		18B5429912F59DF90025A244 /* EffectsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5429812F59DF90025A244 /* EffectsTableViewController.m */; };
+		18B5429C12F59E180025A244 /* Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5429B12F59E180025A244 /* Effect.m */; };
+		18B542E312F5A14A0025A244 /* effects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B542E212F5A14A0025A244 /* effects.plist */; };
+		18B5439C12F68C2C0025A244 /* oilpaint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B5439A12F68C2C0025A244 /* oilpaint.png */; };
+		18B5439D12F68C2C0025A244 /* sepia.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B5439B12F68C2C0025A244 /* sepia.png */; };
 		18B85D8111CDFD0800EFD8A8 /* firefoxgirl320.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B85D8011CDFD0800EFD8A8 /* firefoxgirl320.png */; };
 		540723DE0E3DD25B00B598A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		540723DF0E3DD25B00B598A2 /* EffectsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* EffectsAppDelegate.m */; };
@@ -414,6 +419,13 @@
 		1899619111DC2197008A9582 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../common/im/im_libs/libpng.a; sourceTree = SOURCE_ROOT; };
 		1899619211DC2197008A9582 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../common/im/im_libs/libtiff.a; sourceTree = SOURCE_ROOT; };
 		18ADF6E512A6A781005426F9 /* jobs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jobs.png; sourceTree = "<group>"; };
+		18B5429712F59DF90025A244 /* EffectsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsTableViewController.h; sourceTree = "<group>"; };
+		18B5429812F59DF90025A244 /* EffectsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EffectsTableViewController.m; sourceTree = "<group>"; };
+		18B5429A12F59E180025A244 /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Effect.h; sourceTree = "<group>"; };
+		18B5429B12F59E180025A244 /* Effect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Effect.m; sourceTree = "<group>"; };
+		18B542E212F5A14A0025A244 /* effects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = effects.plist; sourceTree = "<group>"; };
+		18B5439A12F68C2C0025A244 /* oilpaint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oilpaint.png; sourceTree = "<group>"; };
+		18B5439B12F68C2C0025A244 /* sepia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sepia.png; sourceTree = "<group>"; };
 		18B85D8011CDFD0800EFD8A8 /* firefoxgirl320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefoxgirl320.png; sourceTree = SOURCE_ROOT; };
 		18E98BEC1296CDA1005D969E /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -462,6 +474,10 @@
 				1D3623250D0F684500981E51 /* EffectsAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* PhotoProcessViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* PhotoProcessViewController.m */,
+				18B5429712F59DF90025A244 /* EffectsTableViewController.h */,
+				18B5429812F59DF90025A244 /* EffectsTableViewController.m */,
+				18B5429A12F59E180025A244 /* Effect.h */,
+				18B5429B12F59E180025A244 /* Effect.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1131,6 +1147,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				18B5439A12F68C2C0025A244 /* oilpaint.png */,
+				18B5439B12F68C2C0025A244 /* sepia.png */,
 				18ADF6E512A6A781005426F9 /* jobs.png */,
 				1864A45F1292C53D00043ED9 /* Icon57.png */,
 				1864A40B1292B06A00043ED9 /* afagangirl.png */,
@@ -1143,6 +1161,7 @@
 				54BBAF3C0F04148D00568ED9 /* Tink.aiff */,
 				18B85D8011CDFD0800EFD8A8 /* firefoxgirl320.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				18B542E212F5A14A0025A244 /* effects.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1247,6 +1266,9 @@
 				1864A4161292B06A00043ED9 /* Icon512.png in Resources */,
 				1864A4601292C53D00043ED9 /* Icon57.png in Resources */,
 				18ADF6E612A6A781005426F9 /* jobs.png in Resources */,
+				18B542E312F5A14A0025A244 /* effects.plist in Resources */,
+				18B5439C12F68C2C0025A244 /* oilpaint.png in Resources */,
+				18B5439D12F68C2C0025A244 /* sepia.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1340,6 +1362,8 @@
 				1864A4271292B08A00043ED9 /* LabeledActivityIndicatorView.m in Sources */,
 				1864A4281292B08A00043ED9 /* MyUIBox.m in Sources */,
 				188B4B98129556710011E702 /* Appirater.m in Sources */,
+				18B5429912F59DF90025A244 /* EffectsTableViewController.m in Sources */,
+				18B5429C12F59E180025A244 /* Effect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
