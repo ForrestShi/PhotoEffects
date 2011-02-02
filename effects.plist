@@ -18,5 +18,101 @@
 		<key>preview</key>
 		<string>oilpaint.png</string>
 	</dict>
+	<dict>
+		<key>detail</key>
+		<string>negate the colors</string>
+		<key>name</key>
+		<string>negate</string>
+		<key>preview</key>
+		<string>negate.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>simulates a charcoal drawing</string>
+		<key>name</key>
+		<string>charcoal</string>
+		<key>preview</key>
+		<string>charcoal.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>the effect achieved in a photo darkroom by selectively exposing areas of photo sensitive paper to light</string>
+		<key>name</key>
+		<string>solarize</string>
+		<key>preview</key>
+		<string>solarize.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>simulates a pencil sketch</string>
+		<key>name</key>
+		<string>sketch</string>
+		<key>preview</key>
+		<string>sketch.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>seem like people in the shower </string>
+		<key>name</key>
+		<string>spread</string>
+		<key>preview</key>
+		<string>spread.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>make your photo like wave</string>
+		<key>name</key>
+		<string>swirl</string>
+		<key>preview</key>
+		<string>swirl.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>radial blur image effect</string>
+		<key>name</key>
+		<string>blur</string>
+		<key>preview</key>
+		<string>blur.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>imploding your face with a lot fun</string>
+		<key>name</key>
+		<string>implode</string>
+		<key>preview</key>
+		<string>implode.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>emboss effect</string>
+		<key>name</key>
+		<string>emboss</string>
+		<key>preview</key>
+		<string>emboss.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>softens the edges of the image in vignette style</string>
+		<key>name</key>
+		<string>vignette</string>
+		<key>preview</key>
+		<string>vignette.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>gray emboss effects</string>
+		<key>name</key>
+		<string>shade</string>
+		<key>preview</key>
+		<string>shade.png</string>
+	</dict>
+	<dict>
+		<key>detail</key>
+		<string>flip image</string>
+		<key>name</key>
+		<string>flip</string>
+		<key>preview</key>
+		<string>flip.png</string>
+	</dict>
 </array>
 </plist>

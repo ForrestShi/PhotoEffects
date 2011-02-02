@@ -45,7 +45,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
-	
+	self.title = @"Choose A Effect";
 	
 	if (!_effectsArray) {
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"effects" ofType:@"plist"];
@@ -116,8 +116,13 @@
 	if (effect) {
 		cell.textLabel.text = [effect valueForKey:@"name"];
 		UIImage* previewImg = [UIImage imageNamed:[effect valueForKey:@"preview"]];//[[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[[effect valueForKey:@"name"]] ofType:@"png"];
+		
+		//cell.imageView.frame = CGRectMake(30, 30, 128, 128);
+		cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.imageView.bounds = CGRectMake(0, 0, 128, 128);
+		cell.imageView.autoresizingMask =  ( UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight );
 		cell.imageView.image =previewImg;
-		cell.detailTextLabel.text = @"this is detailed description for this filter";
+		cell.detailTextLabel.text = [effect valueForKey:@"detail"];
 		cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     }
 	

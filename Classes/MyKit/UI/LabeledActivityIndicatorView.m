@@ -2,6 +2,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define Size	80
+#define Size_Pad	160
 
 @implementation LabeledActivityIndicatorView
 
@@ -10,7 +11,11 @@
 
 -(LabeledActivityIndicatorView *) initWithController:(UIViewController *)ctrl andText:(NSString *)text;
 {
-	self = [super initWithFrame:CGRectMake(0, 0, Size, Size)];
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		self = [super initWithFrame:CGRectMake(0, 0, Size_Pad, Size_Pad)];
+	}else {
+		self = [super initWithFrame:CGRectMake(0, 0, Size, Size)];
+	}	
 	
 	if (self) {
 		self.controller = ctrl;
@@ -30,8 +35,12 @@
 		label.backgroundColor = [UIColor clearColor];
 		label.font = [UIFont boldSystemFontOfSize: [UIFont smallSystemFontSize]];
 		label.tag = 1001;
-		
-		UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+		CGRect rect = CGRectMake(0, 0, 32, 32);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+			rect.size.width = 64;
+			rect.size.height = 64;
+		}
+		UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithFrame:rect];
 		activity.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2 + Size/5);
 		
 		[activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -51,7 +60,7 @@
 {
 	UILabel* curLabel = [self viewWithTag:1001];
 	curLabel.text = newText;
-	NSLog(@"set new label text");
+//	NSLog(@"set new label text");
 }
 -(void) show
 {
