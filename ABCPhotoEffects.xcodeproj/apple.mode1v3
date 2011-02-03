@@ -236,8 +236,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -290,7 +288,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 108}, {321, 856}}</string>
+							<string>{{0, 0}, {321, 856}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -320,6 +318,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -337,7 +337,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1819FC3012F84AE80026CDF1</string>
+										<string>1819FCA612F91F5E0026CDF1</string>
 										<key>history</key>
 										<array>
 											<string>189F10441290EE33009E6B57</string>
@@ -393,7 +393,7 @@
 											<string>1819FC2612F844E60026CDF1</string>
 											<string>1819FC2712F844E60026CDF1</string>
 											<string>1819FC2B12F849FC0026CDF1</string>
-											<string>1819FBD312F8303E0026CDF1</string>
+											<string>1819FC3012F84AE80026CDF1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -451,9 +451,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1819F9DF12F7E0110026CDF1</string>
+				<string>1819FCA712F91F5E0026CDF1</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1819F9E012F7E0110026CDF1</string>
+				<string>1819FCA812F91F5E0026CDF1</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -591,12 +591,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>1819FA2F12F7EA1A0026CDF1</string>
-		<string>1819FA3012F7EA1A0026CDF1</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>18BC071811CCC9EE00DA6770</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/apple/myGitHub/PhotoEffects/PhotoEffects/ABCPhotoEffects.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -616,14 +611,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>PhotoProcessViewController.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -679,7 +672,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>18BC071811CCC9EE00DA6770</string>
-				<string>1819F9E112F7E0110026CDF1</string>
+				<string>1819FCA912F91F5E0026CDF1</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
